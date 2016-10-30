@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Framework</title>
+</head>
+<body style="background-color:#222">
+	<canvas id="cc" style="display:block; margin:auto;height:500px"></canvas>
+	<script>
+	cc=document.getElementById("cc");
+	width=256;
+	height=240;
+	cc.width=width;
+	cc.height=height;
+	context=cc.getContext("2d");
+	rand=Math.random;
+	t=0;
+	
+	var kremik = new Image();
+	kremik.src = "data:image/png;base64,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";
+	
+	keys=[];
+	edge1=[];
+	edge2=[];
+	document.onkeydown=function(b) {
+	
+		keys[b.keyCode]=true;
+		b.preventDefault();
+	
+	};
+	document.onkeyup=function(b) {
+		keys[b.keyCode]=false;
+		b.preventDefault()
+	};
+	
+	
+	
+	for(var i=256;i<256*12;i++)
+	{
+	}
+	
+	addcupa=function(ax,ay,instance)
+	{
+		cupy.push( {x:ax, y:ay, dx:0,dy:0, t:Math.Random*100, i:instance} )
+	}
+	drawcupe=function(x,y,txt,t)
+	{
+		context.setTransform(1,0,0,1,0,0)
+		context.translate(x,y);
+		context.scale(0.1,0.1)
+		context.rotate(t);
+		context.translate(-128,-128);
+		context.drawImage(kremik,0,0);
+		
+		
+		context.setTransform(1,0,0,1,0,0)
+		context.translate(x,y+10);
+		
+
+		context.font="40px normal";
+		context.fillText(txt,0,0);
+	}
+	
+	//addcupa(Math.random()*255,Math.random()*10,2);
+	//addcupa(Math.random()*255,Math.random()*10,3);
+	reset=function()
+	{
+		
+
+		cupy=[];
+		map1=[];
+		map2=[];
+		map1[49]=0;
+		map1[50]=1;
+		map1[51]=2;
+		map1[52]=3;
+		map1[53]=4;
+		map1[54]=5;
+		map1[55]=6;
+		map1[56]=7;
+		map1[57]=8;
+		map1[48]=9;
+	
+		map2[0]=49;
+		map2[1]=50;
+		map2[2]=51;
+		map2[3]=52;
+		map2[4]=53;
+		map2[5]=54;
+		map2[6]=55;
+		map2[7]=56;
+		map2[8]=57;
+		map2[9]=58;
+		
+		addcupa(Math.random()*255,Math.random()*10,0);
+		addcupa(Math.random()*255,Math.random()*10,1);
+		blockinputs=0;
+	};
+	reset();
+	render=function()
+	{
+		Object.keys(keys).forEach(function(x){edge2[x]=edge1[x]})
+		Object.keys(keys).forEach(function(x){edge1[x]=keys[x]})
+		context.fillStyle = "#fff";
+		context.setTransform(1,0,0,1,0,0)
+		context.clearRect(0,0,width,height)
+		
+		if(blockinputs==0)
+		{
+			for(var i=0;i<cupy.length;i++)
+			{
+				if(edge1[map2[i]] && edge2[map2[i]])
+				{
+					cupy[i].dy=-5;
+				} 
+			}
+		}
+		
+		for(var i=0;i<cupy.length;i++)
+		{
+			cupy[i].t+=0.1;
+			cupy[i].dy+=0.3;
+			cupy[i].y+=cupy[i].dy;
+			drawcupe(cupy[i].x,cupy[i].y,cupy[i].i+1,cupy[i].t)
+			
+			if(cupy[i].y>256 || cupy[i].y<0)
+			{
+				blockinputs=1;
+			}
+			
+		}
+		
+		if(blockinputs==1)
+		{
+			
+			context.setTransform(1,0,0,1,0,0)
+			context.font="10px normal";
+			context.fillText("aww shit..., press space",0,200);
+			
+				if(edge1[32] && !edge2[32])
+				{
+					reset()
+				}
+			
+		}
+		window
+		
+		window.requestAnimationFrame(render);
+	};
+	render();
+	</script>
+</body>
+</html>
